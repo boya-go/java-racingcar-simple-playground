@@ -1,6 +1,7 @@
+
 public class Car {
 
-    private String name;
+    private final String name;
     private int position;
 
     public Car(String name) {
@@ -14,5 +15,11 @@ public class Car {
 
     public int getPosition() {
         return position;
+    }
+
+    public void movePosition(RandomGenerator randomGenerator) {
+        if (randomGenerator.getRandomNumber() > 3) {
+            position++;
+        }
     }
 }
