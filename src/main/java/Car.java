@@ -4,7 +4,7 @@ public class Car {
 
     private String name;
     private int position;
-    Random random = new Random();
+    private static final Random random = new Random();
 
     public Car(String name) {
         validateNotNull(name);
