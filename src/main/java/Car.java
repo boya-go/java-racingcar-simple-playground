@@ -4,12 +4,15 @@ public class Car {
 
     private String name;
     private int position;
-    private static final Random random = new Random();
+    private final NumberGenerator generator;
+    private static final int MOVE_THRESHOLD = 4;
 
-    public Car(String name) {
+
+    public Car(String name, NumberGenerator generator) {
         validateNotNull(name);
         this.name = name;
         this.position = 0;
+        this.generator = generator;
     }
 
     public String getName() {
@@ -26,14 +29,8 @@ public class Car {
         }
     }
 
-    public int getRandomNumber() {
-         int randomNum = random.nextInt(10);
-
-         return randomNum;
-    }
-
-    public void movePosition(int randomNumber) {
-        if (randomNumber > 3) {
+    public void movePosition() {
+        if (generator.generate() >= MOVE_THRESHOLD ) {
             position++;
         }
     }

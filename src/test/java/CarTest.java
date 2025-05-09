@@ -11,7 +11,8 @@ public class CarTest {
     void Car_객체생성() {
 
         // given
-        Car car = new Car("붕붕이");
+        NumberGenerator generator = new RandomNumberGenerator();
+        Car car = new Car("붕붕이", generator);
 
         // when
         assertThat(car.getName()).isEqualTo("붕붕이");
@@ -22,7 +23,9 @@ public class CarTest {
     @ValueSource(strings = {"", " "})
     void Car_이름빈값일경우_예외처리(String name) {
 
-        assertThatThrownBy(() -> new Car(name))
+        NumberGenerator generator = new RandomNumberGenerator();
+
+        assertThatThrownBy(() -> new Car(name,generator))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("이름은 빈 값이 될 수 없습니다.");
     }
@@ -30,8 +33,10 @@ public class CarTest {
     @Test
     void getRandomNumber_랜덤숫자기준충족() {
 
-        Car car = new Car("차1");
-        assertThat(car.getRandomNumber())
+        NumberGenerator generator = new RandomNumberGenerator();
+
+        Car car = new Car("차1",generator);
+        assertThat(generator.generate())
                 .isGreaterThanOrEqualTo(   0)
                 .isLessThanOrEqualTo(   9);
     }
@@ -39,11 +44,13 @@ public class CarTest {
     @Test
     void movePosition_랜덤숫자4이상일때_1이동() {
 
+        NumberGenerator generator = new FixedNumberGenerator(5);
+
         // given
-        Car car = new Car("차2");
+        Car car = new Car("차2", generator);
 
         // when
-        car.movePosition(5);
+        car.movePosition();
 
         // then
         assertThat(car.getPosition()).isEqualTo(1);
@@ -53,10 +60,11 @@ public class CarTest {
     void movePosition_랜덤숫자3이하일때_정지() {
 
         // given
-        Car car = new Car("차3");
+        NumberGenerator generator = new FixedNumberGenerator(2);
+        Car car = new Car("차3", generator);
 
         // when
-        car.movePosition(2);
+        car.movePosition();
 
         // then
         assertThat(car.getPosition()).isEqualTo(0);
