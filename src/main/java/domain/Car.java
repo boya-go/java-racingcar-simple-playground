@@ -1,4 +1,6 @@
-import java.util.Random;
+package domain;
+
+import domain.Generator.NumberGenerator;
 
 public class Car {
 
@@ -9,7 +11,7 @@ public class Car {
 
 
     public Car(String name, NumberGenerator generator) {
-        validateNotNull(name);
+        validateName(name);
         this.name = name;
         this.position = 0;
         this.generator = generator;
@@ -23,11 +25,18 @@ public class Car {
         return position;
     }
 
-    private void validateNotNull(String name) {
+    private void validateName(String name) {
+
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("이름은 빈 값이 될 수 없습니다.");
         }
+        if (name.length() > 5) {
+            throw new IllegalArgumentException("이름은 5자 이하만 가능합니다.");
+
+        }
+
     }
+
 
     public void movePosition() {
         if (generator.generate() >= MOVE_THRESHOLD ) {

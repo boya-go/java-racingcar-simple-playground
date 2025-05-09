@@ -1,3 +1,5 @@
+package domain;
+
 import java.util.List;
 
 public class CarRaceGame {
@@ -15,12 +17,18 @@ public class CarRaceGame {
         }
     }
 
-    private void carRacing(int gameRound) {
-        validateRoundNumber(gameRound);
-        for (int i= 0; i < gameRound; i++) {
-            cars.forEach(car -> car.movePosition());
+    public void playOneRound() {
+        for (Car car : cars) {
+            car.movePosition();
         }
     }
+
+//    private void carRacing(int gameRound) {
+//        validateRoundNumber(gameRound);
+//        for (int i= 0; i < gameRound; i++) {
+//            playOneRound();
+//        }
+//    }
 
     private int getMaxDistance() {
         int maxDistance = cars.stream().mapToInt(Car::getPosition).max().orElseThrow();
@@ -35,7 +43,6 @@ public class CarRaceGame {
     }
 
     public void playRacingGame(int gameRound) {
-        carRacing(gameRound);
         winners = getWinners(getMaxDistance());
     }
 

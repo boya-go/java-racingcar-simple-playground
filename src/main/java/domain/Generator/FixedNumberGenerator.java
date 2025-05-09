@@ -1,3 +1,5 @@
+package domain.Generator;
+
 public class FixedNumberGenerator implements NumberGenerator {
     private final int[] numbers;
     private int index = 0;
