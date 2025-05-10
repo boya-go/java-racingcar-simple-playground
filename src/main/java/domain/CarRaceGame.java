@@ -1,6 +1,9 @@
 package domain;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class CarRaceGame {
 
@@ -9,9 +12,23 @@ public class CarRaceGame {
 
     public CarRaceGame(List<Car> cars) {
         this.cars = cars;
+        notAllowDuplicatedCarNames();
     }
 
-    private void validateRoundNumber(int gameRound) {
+    private void notAllowDuplicatedCarNames() {
+        List<String> carNames = cars.stream()
+                .map(Car::getName)
+                .collect(Collectors.toList());
+
+        Set<String> carNameSet = new HashSet<>(carNames);  // 중복된 이름은 자동으로 제거됨
+
+        // 만약 리스트의 크기와 Set의 크기가 다르면 중복이 있다는 의미
+        if (carNames.size() != carNameSet.size()) {
+            throw new IllegalArgumentException("중복된 자동차 이름은 입력할 수 없습니다.");
+        }
+    }
+
+    public void validateRoundNumber(int gameRound) {
         if (gameRound < 1 ) {
             throw new IllegalArgumentException("라운드는 한 번 이상 진행되어야 합니다.");
         }
@@ -22,13 +39,6 @@ public class CarRaceGame {
             car.movePosition();
         }
     }
-
-//    private void carRacing(int gameRound) {
-//        validateRoundNumber(gameRound);
-//        for (int i= 0; i < gameRound; i++) {
-//            playOneRound();
-//        }
-//    }
 
     private int getMaxDistance() {
         int maxDistance = cars.stream().mapToInt(Car::getPosition).max().orElseThrow();
@@ -43,10 +53,14 @@ public class CarRaceGame {
     }
 
     public void playRacingGame(int gameRound) {
-        winners = getWinners(getMaxDistance());
+        for (int i=0; i < gameRound;i++) {
+            playOneRound();
+        }
     }
 
     public List<String> getWinnerNames() {
+        winners = getWinners(getMaxDistance());
+
         if (winners == null) {
             throw new IllegalStateException("게임이 실행되지 않았습니다.");
         }

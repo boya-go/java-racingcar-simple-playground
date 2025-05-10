@@ -9,10 +9,9 @@ public class Car {
     private final NumberGenerator generator;
     private static final int MOVE_THRESHOLD = 4;
 
-
     public Car(String name, NumberGenerator generator) {
         validateName(name);
-        this.name = name;
+        this.name = name.trim();
         this.position = 0;
         this.generator = generator;
     }
@@ -32,11 +31,8 @@ public class Car {
         }
         if (name.length() > 5) {
             throw new IllegalArgumentException("이름은 5자 이하만 가능합니다.");
-
         }
-
     }
-
 
     public void movePosition() {
         if (generator.generate() >= MOVE_THRESHOLD ) {

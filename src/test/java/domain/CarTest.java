@@ -1,4 +1,5 @@
-import domain.Car;
+package domain;
+
 import domain.Generator.FixedNumberGenerator;
 import domain.Generator.NumberGenerator;
 import domain.Generator.RandomNumberGenerator;
@@ -23,6 +24,17 @@ public class CarTest {
         assertThat(car.getPosition()).isEqualTo(0);
     }
 
+    @Test
+    void Car_이름중복제거() {
+
+        String carName = "  붕붕이";
+        // given
+        NumberGenerator generator = new RandomNumberGenerator();
+        Car car = new Car(carName, generator);
+
+        assertThat(car.getName()).isEqualTo(carName.trim());
+    }
+
     @ParameterizedTest
     @ValueSource(strings = {"", " "})
     void Car_이름빈값일경우_예외처리(String name) {
@@ -32,6 +44,35 @@ public class CarTest {
         assertThatThrownBy(() -> new Car(name,generator))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("이름은 빈 값이 될 수 없습니다.");
+    }
+
+    @Test
+    void Car_이름null값인경우_예외처리() {
+
+        String name = null;
+        NumberGenerator generator = new RandomNumberGenerator();
+
+        assertThatThrownBy(() -> new Car(name,generator))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("이름은 빈 값이 될 수 없습니다.");
+    }
+
+    @Test
+    void movePosition_기준값이상인경우_position이1증가한다() {
+        NumberGenerator generator = new FixedNumberGenerator(5);
+        Car car = new Car("차1", generator);
+        car.movePosition();
+
+        assertThat(car.getPosition()).isEqualTo(1);
+    }
+
+    @Test
+    void movePosition_기준값미만인경우_position이변하지않는다() {
+        NumberGenerator generator = new FixedNumberGenerator(2);
+        Car car = new Car("차1", generator);
+        car.movePosition();
+
+        assertThat(car.getPosition()).isEqualTo(0);
     }
 
     @Test
@@ -61,7 +102,7 @@ public class CarTest {
     }
 
     @Test
-    void movePosition_랜덤숫자3이하일때_정지() {
+    void movePosition_랜덤숫자4미만일때_정지() {
 
         // given
         NumberGenerator generator = new FixedNumberGenerator(2);

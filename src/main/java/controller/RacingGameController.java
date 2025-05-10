@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 import domain.Car;
 import domain.CarRaceGame;
@@ -6,8 +6,7 @@ import domain.Generator.RandomNumberGenerator;
 import view.inputView;
 import view.outputView;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class RacingGameController {
@@ -16,13 +15,16 @@ public class RacingGameController {
 
     public void startRacingGame(){
         String names = inputView.enterCarNames();
-        int round = inputView.enterRoundNumber();
 
         List<Car> cars = Arrays.stream(names.split(DELIMITER))
                 .map(name -> new Car(name, new RandomNumberGenerator()))
                 .collect(Collectors.toList());
 
         final CarRaceGame carRaceGame = new CarRaceGame(cars);
+
+        int round = inputView.enterRoundNumber();
+
+        carRaceGame.validateRoundNumber(round);
 
         outputView.printGameResultTitle();
 
@@ -34,14 +36,9 @@ public class RacingGameController {
 
         }
 
-        carRaceGame.playRacingGame(round);
-
         List<String> winnersName = carRaceGame.getWinnerNames();
 
         outputView.printGameWinners(winnersName);
-
-
-
 
     }
 }
