@@ -1,13 +1,14 @@
 package domain;
 
-import domain.Generator.FixedNumberGenerator;
-import domain.Generator.NumberGenerator;
-import domain.Generator.RandomNumberGenerator;
+import domain.generator.FixedNumberGenerator;
+import domain.generator.NumberGenerator;
+import domain.generator.RandomNumberGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Arrays;
 import java.util.List;

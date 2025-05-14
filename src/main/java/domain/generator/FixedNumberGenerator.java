@@ -1,4 +1,4 @@
-package domain.Generator;
+package domain.generator;
 
 public class FixedNumberGenerator implements NumberGenerator {
     private final int[] numbers;

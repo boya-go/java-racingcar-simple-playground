@@ -1,4 +1,4 @@
-package domain.Generator;
+package domain.generator;
 
 public interface NumberGenerator {
     int generate();

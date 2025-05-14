@@ -7,8 +7,7 @@ import java.util.stream.Collectors;
 
 public class CarRaceGame {
 
-    private List<Car> cars;
-    private List<String> winners;
+    private final List<Car> cars;
 
     public CarRaceGame(List<Car> cars) {
         this.cars = cars;
@@ -20,9 +19,8 @@ public class CarRaceGame {
                 .map(Car::getName)
                 .collect(Collectors.toList());
 
-        Set<String> carNameSet = new HashSet<>(carNames);  // 중복된 이름은 자동으로 제거됨
+        Set<String> carNameSet = new HashSet<>(carNames);
 
-        // 만약 리스트의 크기와 Set의 크기가 다르면 중복이 있다는 의미
         if (carNames.size() != carNameSet.size()) {
             throw new IllegalArgumentException("중복된 자동차 이름은 입력할 수 없습니다.");
         }
@@ -59,7 +57,7 @@ public class CarRaceGame {
     }
 
     public List<String> getWinnerNames() {
-        winners = getWinners(getMaxDistance());
+        List<String> winners = getWinners(getMaxDistance());
 
         if (winners == null) {
             throw new IllegalStateException("게임이 실행되지 않았습니다.");

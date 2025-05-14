@@ -1,10 +1,10 @@
 package domain;
 
-import domain.Generator.NumberGenerator;
+import domain.generator.NumberGenerator;
 
 public class Car {
 
-    private String name;
+    private final String name;
     private int position;
     private final NumberGenerator generator;
     private static final int MOVE_THRESHOLD = 4;
