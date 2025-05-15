@@ -12,7 +12,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -24,27 +23,6 @@ public class CarRaceGameTest {
             cars.add(new Car("차" + (i + 1), generators[i]));
         }
         return cars;
-    }
-
-    @Nested
-    @DisplayName("게임에 참여한 차들의 이름은 중복이 없어야 한다.")
-    class CarRaceGameNameTest {
-
-        @Test
-        void notAllowDuplicatedCarNames_중복된차이름_예외처리() {
-
-            NumberGenerator generator = new RandomNumberGenerator();
-
-            Car car1 = new Car("차1", generator);
-            Car car2 = new Car("차3", generator);
-            Car car3 = new Car("차3", generator);
-
-            List<Car> cars = Arrays.asList(car1, car2, car3);
-
-            assertThatThrownBy(() -> new CarRaceGame(cars))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("중복된 자동차 이름은 입력할 수 없습니다.");
-        }
     }
 
     @Nested

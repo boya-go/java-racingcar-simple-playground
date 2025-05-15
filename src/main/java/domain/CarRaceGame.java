@@ -1,9 +1,6 @@
 package domain;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class CarRaceGame {
 
@@ -11,19 +8,6 @@ public class CarRaceGame {
 
     public CarRaceGame(List<Car> cars) {
         this.cars = cars;
-        notAllowDuplicatedCarNames();
-    }
-
-    private void notAllowDuplicatedCarNames() {
-        List<String> carNames = cars.stream()
-                .map(Car::getName)
-                .collect(Collectors.toList());
-
-        Set<String> carNameSet = new HashSet<>(carNames);
-
-        if (carNames.size() != carNameSet.size()) {
-            throw new IllegalArgumentException("중복된 자동차 이름은 입력할 수 없습니다.");
-        }
     }
 
     public void validateRoundNumber(int gameRound) {
@@ -39,15 +23,19 @@ public class CarRaceGame {
     }
 
     private int getMaxDistance() {
-        int maxDistance = cars.stream().mapToInt(Car::getPosition).max().orElseThrow();
+        int maxDistance = cars.stream()
+                .mapToInt(Car::getPosition)
+                .max()
+                .orElseThrow();
 
         return maxDistance;
     }
 
     private List<String> getWinners(int maxDistance) {
-        List<String> winners = cars.stream().filter(car -> car.getPosition() == maxDistance).map(Car::getName).toList();
-
-        return winners;
+        return cars.stream()
+                .filter(car -> car.getPosition() == maxDistance)
+                .map(Car::getName)
+                .toList();
     }
 
     public void playRacingGame(int gameRound) {

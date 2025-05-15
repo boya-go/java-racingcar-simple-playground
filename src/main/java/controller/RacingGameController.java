@@ -13,6 +13,7 @@ public class RacingGameController {
         String carNames = inputView.enterCarNames();
         List<Car> cars = CarNameParser.parseCarName(carNames);
         final CarRaceGame carRaceGame = new CarRaceGame(cars);
+
         int round = inputView.enterRoundNumber();
 
         outputView.printGameResultTitle();
