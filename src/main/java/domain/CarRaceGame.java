@@ -51,6 +51,8 @@ public class CarRaceGame {
     }
 
     public void playRacingGame(int gameRound) {
+        validateRoundNumber(gameRound);
+
         for (int i=0; i < gameRound;i++) {
             playOneRound();
         }
